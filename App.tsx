@@ -17,12 +17,12 @@
 import React from 'react';
 import { StyleSheet, View, StatusBar } from 'react-native';
 import { HeartRateScreen } from './src/screens/HeartRateScreen';
-
+import { MessageDisplayScreen } from './src/screens/MessageDisplayScreen';
 const App = () => {
   return (
     <View style={styles.container}>
       <StatusBar hidden />
-      <HeartRateScreen />
+     <MessageDisplayScreen/>
     </View>
   );
 };
