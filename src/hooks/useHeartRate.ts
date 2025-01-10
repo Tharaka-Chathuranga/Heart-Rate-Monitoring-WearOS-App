@@ -58,6 +58,8 @@ import { useState, useEffect } from 'react';
 import { Platform } from 'react-native';
 import { HeartRateSensor } from '../services/HeartRateSensor';
 import { HeartRateSimulator } from '../services/HeartRateSimulator';
+import { HeartRateData } from '../models/HeartRateData';
+import { sendHeartRate } from '../api/heartRateApi';
 
 interface UseHeartRateOptions {
   simulateData?: boolean;
@@ -71,7 +73,15 @@ export const useHeartRate = (options: UseHeartRateOptions = {}) => {
   const [currentActivity, setCurrentActivity] = useState(options.initialActivity || 'rest');
 
   const sensor = options.simulateData ? new HeartRateSimulator() : new HeartRateSensor();
-
+  const handleHeartRateUpdate = async (rate: number) => {
+    setHeartRate(rate);
+    const heartRateData = HeartRateData.create(rate);
+    try {
+      await sendHeartRate(heartRateData);
+    } catch (error) {
+      console.error('Error sending heart rate data:', error);
+    }
+  };
   const startMonitoring = async () => {
     try {
       if (!options.simulateData) {
