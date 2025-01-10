@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
+    "@react-native-voice/voice": "^3.2.4",
     "axios": "^1.7.7",
     "react": "18.2.0",
     "react-native": "0.74.1",
+    "react-native-communications": "^2.2.1",
     "react-native-health": "^1.19.0",
     "react-native-permissions": "^3.10.1",
     "react-native-sensors": "^7.3.6",

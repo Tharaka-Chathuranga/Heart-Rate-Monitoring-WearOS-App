@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import {Dimensions, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { HealthMessages } from '../screens/HealthMessages';
 import { Message } from '../types/message';
 
 export const MessageDisplayScreen: React.FC = () => {
-  // Sample test messages
   const [testMessages] = useState<Message[]>([
     {
       id: '1',
@@ -54,10 +53,11 @@ export const MessageDisplayScreen: React.FC = () => {
   const handleMessagePress = (message: Message) => {
     console.log('Message pressed:', message);
   };
-
+  const screenHeight = Dimensions.get('window').height;
+  const statsContainerHeight = screenHeight * 0.35;
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <View style={styles.header, { height: statsContainerHeight }}>
         <Text style={styles.title}>Health Messages</Text>
         <View style={styles.statsContainer}>
           <Text style={styles.statText}>Messages: {testMessages.length}</Text>
@@ -67,7 +67,7 @@ export const MessageDisplayScreen: React.FC = () => {
 
       <HealthMessages
         messages={testMessages}
-        currentHeartRate={currentHeartRate}
+//         currentHeartRate={currentHeartRate}
         onMessagePress={handleMessagePress}
       />
 
