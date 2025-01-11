@@ -11,13 +11,17 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
-    "@react-native-voice/voice": "^3.2.4",
+    "@react-native-voice/voice": "^3.1.5",
+    "@react-navigation/native": "^7.0.14",
+    "@react-navigation/stack": "^7.1.1",
     "axios": "^1.7.7",
     "react": "18.2.0",
     "react-native": "0.74.1",
     "react-native-communications": "^2.2.1",
+    "react-native-gesture-handler": "^2.22.0",
     "react-native-health": "^1.19.0",
     "react-native-permissions": "^3.10.1",
+    "react-native-safe-area-context": "^5.1.0",
     "react-native-sensors": "^7.3.6",
     "react-native-svg": "^15.8.0",
     "socket.io-client": "^4.8.1"
