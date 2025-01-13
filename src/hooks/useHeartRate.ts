@@ -1,65 +1,10 @@
-// import { useState, useEffect } from 'react';
-// import { HeartRateMonitor } from 'src/services/HeartRateMonitor';
-// import { HeartRateData, MonitoringState } from 'src/types/heartRate';
-// import { sendHeartRate } from 'src/api/heartRateApi';
-//
-// export const useHeartRate = (): MonitoringState & {
-//   startMonitoring: () => Promise<void>;
-//   stopMonitoring: () => void;
-// } => {
-//   const [state, setState] = useState<MonitoringState>({
-//     heartRate: null,
-//     isMonitoring: false,
-//     error: null,
-//   });
-//
-//   const monitor = new HeartRateMonitor();
-//
-//   const startMonitoring = async (): Promise<void> => {
-//     try {
-//       await monitor.initialize();
-//       setState(prev => ({ ...prev, isMonitoring: true }));
-//
-//       monitor.startMonitoring((rate: number) => {
-//         setState(prev => ({ ...prev, heartRate: rate }));
-//         const heartRateData: HeartRateData = {
-//           heartRate: rate,
-//           timestamp: Date.now(),
-//         };
-//         sendHeartRate(heartRateData).catch(console.error);
-//       });
-//     } catch (err) {
-//       setState(prev => ({
-//         ...prev,
-//         error: err instanceof Error ? err.message : 'Unknown error',
-//         isMonitoring: false,
-//       }));
-//     }
-//   };
-//
-//   const stopMonitoring = (): void => {
-//     monitor.stopMonitoring();
-//     setState(prev => ({ ...prev, isMonitoring: false }));
-//   };
-//
-//   useEffect(() => {
-//     return () => {
-//       stopMonitoring();
-//     };
-//   }, []);
-//
-//   return {
-//     ...state,
-//     startMonitoring,
-//     stopMonitoring,
-//   };
-// };
 import { useState, useEffect } from 'react';
 import { Platform } from 'react-native';
 import { HeartRateSensor } from '../services/HeartRateSensor';
 import { HeartRateSimulator } from '../services/HeartRateSimulator';
 import { HeartRateData } from '../models/HeartRateData';
 import { sendHeartRate } from '../api/heartRateApi';
+import { connectWebSocket } from '../api/heartRateApi';
 
 interface UseHeartRateOptions {
   simulateData?: boolean;
@@ -71,6 +16,8 @@ export const useHeartRate = (options: UseHeartRateOptions = {}) => {
   const [isMonitoring, setIsMonitoring] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [currentActivity, setCurrentActivity] = useState(options.initialActivity || 'rest');
+  const [retryCount, setRetryCount] = useState(0);
+  const MAX_RETRIES = 3;
 
   const sensor = options.simulateData ? new HeartRateSimulator() : new HeartRateSensor();
   const handleHeartRateUpdate = async (rate: number) => {
@@ -93,10 +40,12 @@ export const useHeartRate = (options: UseHeartRateOptions = {}) => {
         (sensor as HeartRateSimulator).setActivity(currentActivity);
         (sensor as HeartRateSimulator).startSimulation((rate) => {
           setHeartRate(rate);
+          handleHeartRateUpdate(rate);
         });
       } else {
         (sensor as HeartRateSensor).startReading((rate) => {
           setHeartRate(rate);
+           handleHeartRateUpdate(rate);
         });
       }
     } catch (err) {
@@ -122,8 +71,9 @@ export const useHeartRate = (options: UseHeartRateOptions = {}) => {
   };
 
   useEffect(() => {
-    return () => {
-      stopMonitoring();
+     connectWebSocket();
+      return () => {
+        stopMonitoring();
     };
   }, []);
 

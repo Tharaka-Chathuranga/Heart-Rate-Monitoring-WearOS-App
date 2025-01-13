@@ -1,4 +1,3 @@
-// src/screens/EmergencyAlertScreen.tsx
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, Button, TextInput } from 'react-native';
 import { useEmergencyAlert } from '../hooks/useEmergencyAlert';
