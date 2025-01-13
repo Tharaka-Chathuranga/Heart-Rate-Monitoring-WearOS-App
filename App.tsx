@@ -1,5 +1,5 @@
-
 import React from 'react';
+import 'react-native-gesture-handler';
 import { SafeAreaView, StatusBar } from 'react-native';
 import { HeartRateScreen } from 'src/screens/HeartRateScreen';
 
@@ -35,5 +35,24 @@ export default App;
 //     justifyContent: 'center',
 //   },
 // });
+//
+// export default App;
+
+
+// import React from 'react';
+// import { SafeAreaView, StatusBar } from 'react-native';
+// import { NavigationContainer } from '@react-navigation/native';
+// import AppNavigator from 'src/navigation/AppNavigator';
+//
+// const App: React.FC = () => {
+//   return (
+//     <NavigationContainer>
+//       <SafeAreaView style={{ flex: 1 }}>
+//         <StatusBar barStyle="dark-content" />
+//         <AppNavigator />
+//       </SafeAreaView>
+//     </NavigationContainer>
+//   );
+// };
 //
 // export default App;
