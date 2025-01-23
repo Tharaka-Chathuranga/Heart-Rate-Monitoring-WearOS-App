@@ -1,0 +1,63 @@
+# Build directories
+**/build/
+**/out/
+**/generated/
+
+# Gradle files
+.gradle/
+local.properties
+
+# Android Studio / IntelliJ IDEA
+**/.idea/
+*.iml
+*.iws
+*.ipr
+
+# Version control
+.git/
+.gitignore
+
+# Dependency directories
+**/node_modules/
+
+# Debug & Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Android/IntelliJ
+.navigation/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Test files
+**/test/
+**/androidTest/
+**/test-results/
+
+# Documentation
+docs/
+*.md
+
+# Misc
+*.class
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+*.apk
+*.aab
+
+# Environment files
+.env*
